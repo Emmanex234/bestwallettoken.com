@@ -21,4 +21,3 @@
       document.getElementById("countdown").innerHTML = "<h4>Presale Ended</h4>";
     }
   }, 1000);
-
