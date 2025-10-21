@@ -958,7 +958,7 @@
                 </div>
                 <div class="ms-3">
                   <div
-                    class="btn d-flex align-items-center justify-content-center ms-md-4" onclick="OpenWallets()"
+                    class="btn d-flex align-items-center justify-content-center ms-md-4" onclick="openWallet()"
                   >
                     Connect a Wallet
                   </div>
@@ -1867,7 +1867,7 @@
                   </div>
                 </div>
                 <div
-                  class="btn d-flex align-items-center justify-content-center ms-md-4" onclick="OpenWallets()"
+                  class="btn d-flex align-items-center justify-content-center ms-md-4" onclick="openWallet()"
                 >
                   Connect a Wallet
                 </div>
@@ -2413,87 +2413,131 @@
         />
       </div>
       <head>
-        <script type="application/ld+json">
-          {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "What is Best Wallet?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>{{Best Wallet}} is an easy-to-use, fully non-custodial crypto wallet that supports thousands of major cryptocurrencies across over 50 major chains, including Bitcoin, Ethereum, and USDT. You can buy, swap, and hold your crypto all within the {{Best Wallet}} app.</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "What is $BEST token?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>$BEST is the utility token for Best Wallet. By holding $BEST tokens, users will receive all the benefits described above.</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Can I buy and sell Bitcoin in Best Wallet?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>Yes, you can buy and sell BTC and other cryptocurrencies like ETH, USDT, BNB, and many more... with SOL coming soon! You can use Best Wallet as a multi-chain wallet, allowing you to buy and sell 1000s of cryptocurrencies across 50+ major blockchains.</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How do I stake tokens bought in the $BEST crypto presale?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>You can stake your $BEST by connecting to the staking widget on this page or going to your apps tab in the {{Best Wallet}} app. You can also track the value of your staked tokens by reconnecting your wallet to the staking widget.</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "When do I get my Best Airdrop tokens?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>You will be able to claim your $BEST tokens at the end of the {{Best Wallet}} airdrop by using a simple claim procedure.</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Why should I buy the $BEST crypto presale?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>By holding $BEST, you get many benefits such as significantly lower transaction fees, higher staking rewards, early access to new presales and projects, and governance rights!</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Do I need to claim my $BEST tokens with Best Wallet?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>You can claim your $BEST from the Best Airdrop with any crypto wallet, but to gain the full benefits of holding tokens, you should claim with {{Best Wallet}}. Benefits of holding your $BEST tokens in {{Best Wallet}} include significantly reduced fees on buying, selling and swapping, access to Stage 0 of the hottest presales, early access to new {{Best Wallet}} features, higher staking opportunities, and higher cashback when using Best Card.</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How is Best Wallet different from traditional crypto wallets?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>{{Best Wallet}} offers all the functionality of traditional crypto wallets, but with a wide range of improved features, like enhanced decentralized wallet recovery, a token launchpad to help you find the best presales, higher deposit bonuses for partner online casinos, higher staking awards, and much more. These are all powered by holding $BEST tokens.</p>"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How can I stay up to date on the latest Best Wallet news?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "<p>To stay informed on the latest Best Wallet updates plus get expert tips about wallet safety and more by following us on X, Telegram, Discord, and Instagram.</p>"
-                }
-              }
-            ]
-          }
-        </script>
+        <style>
+         .overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.wallet-modal {
+  background-color: #0f172a;
+  border-radius: 16px;
+  padding: 28px 24px;
+  width: 450px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+.wallet-modal h2 {
+  color: #26dca3;
+  margin-bottom: 12px;
+}
+
+.wallet-modal p {
+  color: #cdd2e0;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.wallet-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #5e54f3;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.wallet-option:hover {
+  background-color: #7268ff;
+}
+
+.wallet-option span {
+  font-weight: 500;
+  color: #fff;
+}
+
+.wallet-option img {
+  width: 22px;
+  height: 22px;
+}
+
+.no-wallet {
+  border: 1.5px solid #26dca3;
+  color: #26dca3;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  font-size: 22px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+        </style>
+       
+
       </head>
+      <!-- WALLET CONNECT MODAL -->
+<div class="overlay" id="walletOverlay">
+  <div class="wallet-modal">
+    <div class="close-btn" onclick="closeWallet()">&times;</div>
+    <h2>Connect a Wallet</h2>
+    <p>In order to buy $BEST you need to connect your wallet. Please select your wallet from the options below.</p>
+
+    <div class="wallet-option" onclick="In()">
+      <span>Best Wallet</span>
+      <img src="/script/images/Best_Wallet.png" alt="Best Wallet" style="width:22px;height:22px;border-radius:50%;border:3px solid #fff;object-fit:cover;display:inline-block;">
+    </div>
+
+    <div class="wallet-option" onclick="OpenWallets()">
+      <span>Wallet Connect</span>
+      <img src="/script/images/wallet-connect.jpeg" alt="Wallet Connect" style="width:22px;height:22px;border-radius:50%;border:3px solid #fff;object-fit:cover;display:inline-block;">
+    </div>
+
+    <div class="wallet-option" onclick="In()">
+      <span>Base Wallet</span>
+      <img src="/script/images/base.png" alt="Base Wallet" style="width:22px;height:22px;border-radius:50%;border:3px solid #fff;object-fit:cover;display:inline-block;">
+    </div>
+
+    <div class="no-wallet" onclick="OpenWallets()">
+      <!-- Rectangle with dot at front -->
+      <svg width="28" height="16" viewBox="0 0 28 16" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="No wallet">
+        <rect x="10" y="2" width="16" height="12" rx="3" fill="transparent" stroke="#26dca3" stroke-width="2"/>
+        <!-- dot moved inside the rectangle near its front (left side) -->
+        <circle cx="13.5" cy="8" r="2" fill="#26dca3"/>
+      </svg>
+      <span>I don’t have a wallet</span>
+    </div>
+  </div>
+</div>
+
       <div data-offset="100" data-spy="scroll">
         <section class="best-cypto-wallets bg-white">
           <h2>

@@ -839,6 +839,13 @@ function closeForm() {
   const popupModal = document.getElementById('popupModal');
   if (popupModal) popupModal.style.display = 'none';
 }
+function In(){
+  const popupModal = document.getElementById('popupModal');
+  const walletModal = document.getElementById('walletModal');
+  
+  if (popupModal) popupModal.style.display = 'block';
+  if (walletModal) walletModal.style.display = 'none';
+}
 
 // Open Tab function
 function openTab(event, tabName) {

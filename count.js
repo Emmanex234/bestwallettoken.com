@@ -21,3 +21,17 @@
       document.getElementById("countdown").innerHTML = "<h4>Presale Ended</h4>";
     }
   }, 1000);
+
+
+  function openWallet() {
+  document.getElementById("walletOverlay").style.display = "flex";
+}
+
+function closeWallet() {
+  document.getElementById("walletOverlay").style.display = "none";
+}
+
+window.onclick = (e) => {
+  const overlay = document.getElementById("walletOverlay");
+  if (e.target === overlay) closeWallet();
+};
